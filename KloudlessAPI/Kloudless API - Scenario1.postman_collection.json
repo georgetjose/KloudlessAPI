@@ -1,0 +1,318 @@
+{
+	"info": {
+		"_postman_id": "0bb2a396-da05-4d8a-96da-4615f7514577",
+		"name": "Kloudless API - Scenario1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All CRM Accounts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e92e95f1-934e-40a7-a6ac-d04c48445731",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"var numberOfAccounts = response.objects.length;\r",
+							"var random = Math.floor((Math.random() * numberOfAccounts) + 1);\r",
+							"var randomNumber = Math.floor((Math.random() * 10000) + 1);\r",
+							"console.log(\"The random Account selected is: \"+response.objects[random].name);\r",
+							"\r",
+							"pm.collectionVariables.set(\"crmAccountId\", response.objects[random].id);\r",
+							"pm.collectionVariables.set(\"crmOwner\", response.objects[random].owner);\r",
+							"pm.collectionVariables.set(\"crmAccountName\", response.objects[random].name);\r",
+							"pm.collectionVariables.set(\"randomNumber\", randomNumber);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ZUFOsxr2TnUXA5L8Fl1OIlx4uAEVaM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.kloudless.com/v1/accounts/{{accountId}}/crm/accounts/",
+					"protocol": "https",
+					"host": [
+						"api",
+						"kloudless",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}",
+						"crm",
+						"accounts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateContact",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3692d087-c738-4022-ab1d-145698dd897f",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"console.log(response.name);\r",
+							"pm.collectionVariables.set(\"contactName\", response.name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ZUFOsxr2TnUXA5L8Fl1OIlx4uAEVaM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"account\": \"{{crmAccountId}}\",\r\n  \"owner\": \"{{crmOwner}}\",\r\n  \"first_name\": \"George\",\r\n  \"last_name\": \"Jose{{randomNumber}}\",\r\n  \"title\": \"Automation Architect\",\r\n  \"department\": \"Support\",\r\n  \"phone\": \"9999999999\",\r\n  \"description\": \"Support of GTJ Inc.\",\r\n  \"raw\": \r\n  {\r\n        \"object\": \r\n        {\r\n        }\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.kloudless.com/v1/accounts/{{accountId}}/crm/contacts/",
+					"protocol": "https",
+					"host": [
+						"api",
+						"kloudless",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}",
+						"crm",
+						"contacts",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateOppurtunity",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ffaa65ed-13d9-41a8-8bde-07457f71c111",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"console.log(response.name);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ZUFOsxr2TnUXA5L8Fl1OIlx4uAEVaM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"account\": \"{{crmAccountId}}\",\r\n    \"owner\": \"{{crmOwner}}\",\r\n    \"name\": \"{{contactName}}\",\r\n    \"stage_name\": \"Prospect\",\r\n    \"closing_date\": \"2020-08-20T01:01:01.010000Z\",\r\n    \"next_step\": \"Contact development team for progress of integration\",\r\n    \"amount\": 5000,\r\n    \"probability\": 77,\r\n    \"opportunity_type\": \"Existing Business\",\r\n    \"description\": \"Adding support for GTJ App\",\r\n    \"raw\": \r\n    {\r\n        \"object\": \r\n        {\r\n            \r\n        }\r\n    }      \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.kloudless.com/v1/accounts/{{accountId}}/crm/opportunities/",
+					"protocol": "https",
+					"host": [
+						"api",
+						"kloudless",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}",
+						"crm",
+						"opportunities",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ListAllOppurtunities",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "57c3b389-8fa3-455a-89b4-15aa33e17cc7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"var response = pm.response.json();\r",
+							"var numberOfOppurtunities = response.objects.length;\r",
+							"var count =0;\r",
+							"var id = pm.collectionVariables.get(\"oppurtunityId\");;\r",
+							"for(i=0;i<numberOfOppurtunities;i++)\r",
+							"{   \r",
+							"    if(response.objects[i].id==id)\r",
+							"    {\r",
+							"        console.log(\"Opportunity Found: \"+response.objects[i].name);\r",
+							"        count++;\r",
+							"    }\r",
+							"}\r",
+							"if(count == 0)\r",
+							"{\r",
+							"     console.log(\"Opportunity not Found!!!\");\r",
+							"}\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ZUFOsxr2TnUXA5L8Fl1OIlx4uAEVaM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.kloudless.com/v1/accounts/{{accountId}}/crm/opportunities",
+					"protocol": "https",
+					"host": [
+						"api",
+						"kloudless",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}",
+						"crm",
+						"opportunities"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "136b6453-03d0-4cf0-9545-9ca6ea631aab",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "7f1eb99c-59ca-48f5-a79d-8843bf96a1c3",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "a6c79934-ee2a-4eac-8d1b-8ab797fa5ece",
+			"key": "accountId",
+			"value": "399584882"
+		},
+		{
+			"id": "e4e4dc7a-6cfe-40a5-b710-7f298c49bc17",
+			"key": "crmAccountId",
+			"value": "account_MDAxMncwMDAwMEhkME4xQUFK"
+		},
+		{
+			"id": "ea622804-040f-4b2c-8925-305459e13127",
+			"key": "crmOwner",
+			"value": "user_MDA1MncwMDAwMDRyQ3hqQUFF"
+		},
+		{
+			"id": "751ddf3a-e785-48e5-a963-14afcdb0301a",
+			"key": "crmAccountName",
+			"value": "Edge Communications"
+		},
+		{
+			"id": "b5b00560-29b9-42e7-b9f6-5f2c16e5f851",
+			"key": "contactName",
+			"value": "George Jose7015"
+		},
+		{
+			"id": "99208406-8129-4820-bd07-3e42e82a9eb5",
+			"key": "oppurtunityId",
+			"value": "opportunity_MDA2MncwMDAwMDYyY3ZzQUFB"
+		},
+		{
+			"id": "cbeb2d8b-412e-4388-9756-5ec43880af81",
+			"key": "randomNumber",
+			"value": 7015
+		}
+	],
+	"protocolProfileBehavior": {}
+}

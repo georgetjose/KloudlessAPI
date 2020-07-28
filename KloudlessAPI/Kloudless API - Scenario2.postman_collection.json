@@ -1,0 +1,335 @@
+{
+	"info": {
+		"_postman_id": "666c1cdf-ee42-4034-b06f-222b4af08995",
+		"name": "Kloudless API - Scenario2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "10f08772-ecae-4666-8cd4-111fc647e127",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"pm.collectionVariables.set(\"taskId\", response.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ZUFOsxr2TnUXA5L8Fl1OIlx4uAEVaM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"owner\": \"user_MDA1MncwMDAwMDRyQ3hqQUFF\",\r\n        \"status\": \"Not Started\",\r\n        \"priority\": \"low\",\r\n        \"subject\": \"Automation Coding for API\",\r\n        \"description\": \"Finish Automation Coding for 2020-08-015\",\r\n        \"raw\": {\r\n            \"object\": {\r\n            }\r\n        }\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.kloudless.com/v1/accounts/{{accountId}}/crm/tasks/",
+					"protocol": "https",
+					"host": [
+						"api",
+						"kloudless",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}",
+						"crm",
+						"tasks",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "478cd4d5-8559-41c6-afb1-f52208efac85",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"pm.collectionVariables.set(\"taskId\", response.id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ZUFOsxr2TnUXA5L8Fl1OIlx4uAEVaM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"Completed\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.kloudless.com/v1/accounts/{{accountId}}/crm/tasks/{{taskId}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"kloudless",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}",
+						"crm",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetSingleTask",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9ccbd221-fdb6-4119-a366-572c9e6a84fc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"pm.expect(response.status).to.eql(\"Completed\");"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ZUFOsxr2TnUXA5L8Fl1OIlx4uAEVaM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.kloudless.com/v1/accounts/{{accountId}}/crm/tasks/{{taskId}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"kloudless",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}",
+						"crm",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09fbccaf-4a5d-4de6-8347-30a29557346e",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ZUFOsxr2TnUXA5L8Fl1OIlx4uAEVaM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://api.kloudless.com/v1/accounts/{{accountId}}/crm/tasks/{{taskId}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"kloudless",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}",
+						"crm",
+						"tasks",
+						"{{taskId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllTasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8ef264f3-5547-4fdc-b2c5-ece85f1fe096",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"var response = pm.response.json();\r",
+							"var numberOfTasks = response.objects.length;\r",
+							"var count =0;\r",
+							"\r",
+							"var id = pm.collectionVariables.get(\"taskId\");;\r",
+							"\r",
+							"for(i=0;i<numberOfTasks;i++)\r",
+							"{   \r",
+							"    if(response.objects[i].id==id)\r",
+							"    {\r",
+							"        console.log(\"Task Found: \"+response.objects[i].name);\r",
+							"        count++;\r",
+							"    }\r",
+							"}\r",
+							"if(count == 0)\r",
+							"{\r",
+							"     console.log(\"Task not Found!!!\");\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "ZUFOsxr2TnUXA5L8Fl1OIlx4uAEVaM",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.kloudless.com/v1/accounts/{{accountId}}/crm/tasks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"kloudless",
+						"com"
+					],
+					"path": [
+						"v1",
+						"accounts",
+						"{{accountId}}",
+						"crm",
+						"tasks"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "66bb58bc-a077-41ad-8c19-09ca65588b48",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "13017d3d-72ef-4a1c-af35-b20096637448",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "8350ae72-734a-4464-8c37-a03c709c6835",
+			"key": "accountId",
+			"value": "399584882"
+		},
+		{
+			"id": "15409455-74f1-4794-9890-c3625966d1ae",
+			"key": "taskId",
+			"value": "task_MDBUMncwMDAwMEJoTktrRUFO"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
